@@ -19,6 +19,7 @@
   "homepage": "https://github.com/wahengchang/nodejs-websocket-example#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "newrelic": "^4.9.0",
     "ws": "^6.1.0"
   }
 }
