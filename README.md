@@ -20,6 +20,7 @@ This is not yet tested for Dockerization but that step may be added later.
 **Step 1: build the project**
 - cd into the project root directory
 - npm install
+- note that you should use npm audit to bring at least one dependency up to date ('ws' was the only one at time of this writing)
 
 **Step 2: configure new relic**
 - note that these steps have already been taken for adding New Relic to this app:
