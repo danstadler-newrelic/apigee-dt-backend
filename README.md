@@ -1,3 +1,59 @@
+This Node app represents a downstream/back-end app sitting behind an Apigee proxy.
+
+It is based on original code found on the web, then modified for this integration project. BSD license only added in this project, not the original.
+
+This is not yet tested for Dockerization but that step may be added later.
+
+
+**test environment**
+- Ubuntu 16
+
+
+**prerequisites**
+- Node, npm
+
+**Clone the source code**
+- https://github.com/danstadler-newrelic/apigee-dt-backend
+
+
+
+**Step 1: build the project**
+- cd into the project root directory
+- npm install
+
+**Step 2: configure new relic**
+- note that these steps have already been taken for adding New Relic to this app:
+https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
+- however you still need to add your license key and application name to newrelic.js (it is already copied into the root directory of the project.
+- the require statement is already at the top of server.js
+
+
+**Step 3: start the app**
+- from the app root directory, run this:  npm start
+
+
+**Step 4: monitor inbound calls**
+- open this in the browser: http://localhost:3000/
+- open the console
+- you should see a connected message, and a timestamp message
+
+
+**Step 5: make inbound calls**
+- open this in the browser: http://localhost:3000/apigee-ingress-point
+- this is the URL you need to hook up as the back-end endpoint from Apigee
+- when it is called, 2 things will happen:
+1) the console output from step 4 will show that an inbound call was processed
+2) the page output from this step will show the same message (i.e. that's what would be sent back to apigee and the front-end caller).
+
+
+
+
+
+
+
+=================================
+original readme starts here:
+
 # nodejs-websocket-example
 it is an example of implementing websocket(ws) on both server and client side
 
