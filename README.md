@@ -10,7 +10,9 @@ This is not yet tested for Dockerization but that step may be added later.
 
 
 **prerequisites**
-- Node, npm
+- Node, npm, build tools (i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential
+
+
 
 **Clone the source code**
 - https://github.com/danstadler-newrelic/apigee-dt-backend
