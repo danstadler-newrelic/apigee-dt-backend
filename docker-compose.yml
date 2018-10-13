@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+      - '40510:40510'
+    environment:
+      - NEW_RELIC_APP_NAME=your-app-name-here
+      - NEW_RELIC_LICENSE_KEY=your-license-key-here
+      - DOMAIN_AND_PORT=your-domain-and-port-here

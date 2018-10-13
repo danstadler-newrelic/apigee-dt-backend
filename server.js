@@ -27,11 +27,13 @@ var test_message = {
 };
 
 var app = express()
+app.set('views', './views')
+app.set('view engine', 'pug')
 
 // you can open this page, and then open the browser's console, 
 // to monitor inbound calls to /apigee-ingress-point
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/ws.html');
+    res.render('ws', { domainAndPort: process.env.DOMAIN_AND_PORT })
 })
 
 // this function represents the ingress point for Apigee.
