@@ -2,47 +2,58 @@ This Node app represents a downstream/back-end app sitting behind an Apigee prox
 
 It is based on original code found on the web, then modified for this integration project. BSD license only added in this project, not the original.
 
-This is not yet tested for Dockerization but that step may be added later.
+This app has just gotten Dockerized. Please let me know if anything seems out of order.
 
 
 **test environment**
-- Ubuntu 16
+- Ubuntu 18
 
 
 **prerequisites**
-- Node, npm, build tools (i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential
 
+1) if you want to build this and run it using npm start:
+- Node
+- npm
+- build tools
+(i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential
+
+2) If you want to run this just using Docker and docker-compose:
+- Docker
+- docker-compose
 
 
 **Clone the source code**
 - https://github.com/danstadler-newrelic/apigee-dt-backend
 
 
+**Step 1: modify your docker-compose.yml file**
+- tbese 3 lines need to be updated with your own values.
+      - NEW_RELIC_APP_NAME=your-app-name-here
+      - NEW_RELIC_LICENSE_KEY=your-license-key-here
+      - DOMAIN_AND_PORT=your-domain-and-port-here
 
-**Step 1: build the project**
-- cd into the project root directory
-- npm install
-- if needed: use npm audit to bring at least one dependency up to date ('ws' was needed for this in the original version of this code.)
+- NEW_RELIC_APP_NAME: the name you want this app to appear as in New Relic APM
 
-**Step 2: configure new relic**
-- note that these steps have already been taken for adding New Relic to this app:
-https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
-- however you still need to add your license key and application name to newrelic.js (it is already copied into the root directory of the project.
-- the require statement is already at the top of server.js
+- NEW_RELIC_LICENSE_KEY: your RPM license key, available here: https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
+
+- DOMAIN_AND_PORT: for the websocket component, this needs to be passed in. It is the domain you are running this app on, then a colon, then the port you set up the websocket to listen on, also in docker-compose.yml.
+- note that with domain, DON'T include "http://"
+- for example: 
+      - DOMAIN_AND_PORT=ec2-18-237-81-98.us-west-2.compute.amazonaws.com:40510
 
 
-**Step 3: start the app**
-- from the app root directory, run this:  npm start
+**Step 2: build and run the container**
+- from the app root directory, run this: docker-compose up
 
 
-**Step 4: monitor inbound calls**
-- open this in the browser: http://localhost:3000/
+**Step 3: monitor inbound calls**
+- open this in the browser: http://[your-app-domain]:3000/
 - open the console
 - you should see a connected message, and a timestamp message
 
 
-**Step 5: make inbound calls**
-- open this in the browser: http://localhost:3000/apigee-ingress-point
+**Step 4: make inbound calls**
+- open this in the browser: http://[your-app-domain]:3000/apigee-ingress-point
 - this is the URL you need to hook up as the back-end endpoint from Apigee
 - when it is called, 2 things will happen:
 1) the console output from step 4 will show that an inbound call was processed
