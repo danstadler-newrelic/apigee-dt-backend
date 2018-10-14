@@ -6,27 +6,29 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 
 
 **test environment**
-- Ubuntu 18
+- Ubuntu 16
 
 
 **prerequisites**
 
 1) if you want to build this and run it using npm start:
+- when doing this, you'll have to edit your newrelic.yml file yourself, or work on your environment variables
+
 - Node
 - npm
 - build tools
 (i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential
 
-2) If you want to run this just using Docker and docker-compose:
+
+2) If you want to run this just using Docker:
 - Docker
-- docker-compose
 
 
 **Clone the source code**
 - https://github.com/danstadler-newrelic/apigee-dt-backend
 
 
-**Step 1: modify your docker-compose.yml file**
+**Step 1: modify your Dockerfile**
 - tbese 3 lines need to be updated with your own values.
       - NEW_RELIC_APP_NAME=your-app-name-here
       - NEW_RELIC_LICENSE_KEY=your-license-key-here
@@ -42,9 +44,8 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
       - DOMAIN_AND_PORT=ec2-18-237-81-98.us-west-2.compute.amazonaws.com:40510
 
 
-**Step 2: build and run the container**
-- from the app root directory, run this: docker-compose up
-
+**Step 2: build and deploy the container**
+- leaving this up to the reader. Probably a combination of docker build, docker push, creating a cluster, using kubectl to create the pod, etc.
 
 **Step 3: monitor inbound calls**
 - open this in the browser: http://[your-app-domain]:3000/
