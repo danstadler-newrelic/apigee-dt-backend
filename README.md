@@ -40,10 +40,9 @@ The first 2 of these need to be updated with your own values (third is optional)
 
 **Step 1a: test locally**
 - you just need to export the newrelic environment variables for appName and licenseKey, then run npm start
-
-export NEW_RELIC_APP_NAME=your-app-name-here
-export NEW_RELIC_LICENSE_KEY=your-license-key-here
-npm start
+- export NEW_RELIC_APP_NAME=your-app-name-here
+- export NEW_RELIC_LICENSE_KEY=your-license-key-here
+- npm start
 
 
 **Step 2: build and deploy the container**
