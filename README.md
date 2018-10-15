@@ -31,7 +31,8 @@ The first 2 of these need to be updated with your own values (third is optional)
 
 - NEW_RELIC_LICENSE_KEY: your RPM license key, available here: https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
 
-- DOMAIN_AND_PORT (this is really just optional... could just be localhost:40510, unless you are really needing to debug, in which case):
+- DOMAIN_AND_PORT
+(this is really just optional... could just be localhost:40510, unless you are really needing to debug, in which case):
 - for the websocket component, this needs to be passed in. It is the domain you are running this app on, then a colon, then the port you set up the websocket to listen on, also in docker-compose.yml.
 - note that with domain, DON'T include "http://"
 - for example: 
