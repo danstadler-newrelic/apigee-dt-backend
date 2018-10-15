@@ -11,14 +11,10 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 
 **prerequisites**
 
-1) if you want to build this and run it using npm start:
-- when doing this, you'll have to edit your newrelic.yml file yourself, or work on your environment variables
-
+1) if you want to build this and run it using npm start (when doing this, you'll have to edit your newrelic.yml file yourself, or work on your environment variables, see step 1a)
 - Node
 - npm
-- build tools
-(i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential
-
+- build tools (i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential)
 
 2) If you want to run this just using Docker:
 - Docker
@@ -29,7 +25,7 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 
 
 **Step 1: modify your Dockerfile**
-- tbese 3 lines need to be updated with your own values.
+- these 3 lines need to be updated with your own values.
       - NEW_RELIC_APP_NAME=your-app-name-here
       - NEW_RELIC_LICENSE_KEY=your-license-key-here
       - DOMAIN_AND_PORT=your-domain-and-port-here
