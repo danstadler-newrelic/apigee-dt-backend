@@ -44,6 +44,13 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 - for example: 
       - DOMAIN_AND_PORT=my-testing-back-end.com:40510
 
+**Step 1a: test locally**
+- you just need to export the newrelic environment variables for appName and licenseKey, then run npm start
+
+export NEW_RELIC_APP_NAME=your-app-name-here
+export NEW_RELIC_LICENSE_KEY=your-license-key-here
+npm start
+
 
 **Step 2: build and deploy the container**
 - leaving this up to the reader. Probably a combination of docker build, docker push, creating a cluster, using kubectl to create the pod, etc.
