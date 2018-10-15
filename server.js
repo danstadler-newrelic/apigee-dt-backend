@@ -20,13 +20,6 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
-// Static test var
-var test_message = {
-    'value1': 'ABC',
-    'value2': 'DEF',
-    'timestamp': `${new Date()}`
-};
-
 var app = express()
 app.set('views', './views')
 app.set('view engine', 'pug')
@@ -41,9 +34,16 @@ app.get('/', function (req, res) {
 // it broadcasts to WebSocket clients (like in '/') that a call came in, 
 // and it then sends the same test message back to the upstream caller.
 app.get('/apigee-ingress-point', function (req, res) {
+
   // broadcast to clients
   wss.broadcast(test_message);
+
   // respond to upstream callers
+  var test_message = {
+    'value1': 'ABC',
+    'value2': 'DEF',
+    'timestamp': `${new Date()}`
+  };
   res.send(JSON.stringify(test_message))
 })
 
