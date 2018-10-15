@@ -25,10 +25,7 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 
 
 **Step 1: modify your Dockerfile**
-- these 3 lines need to be updated with your own values.
-      - NEW_RELIC_APP_NAME=your-app-name-here
-      - NEW_RELIC_LICENSE_KEY=your-license-key-here
-      - DOMAIN_AND_PORT=your-domain-and-port-here
+The first 2 of these need to be updated with your own values (third is optional):
 
 - NEW_RELIC_APP_NAME: the name you want this app to appear as in New Relic APM
 
