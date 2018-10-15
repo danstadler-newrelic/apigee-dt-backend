@@ -38,28 +38,35 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 
 - NEW_RELIC_LICENSE_KEY: your RPM license key, available here: https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
 
-- DOMAIN_AND_PORT: for the websocket component, this needs to be passed in. It is the domain you are running this app on, then a colon, then the port you set up the websocket to listen on, also in docker-compose.yml.
+- DOMAIN_AND_PORT (this is really just optional... could just be localhost:40510, unless you are really needing to debug, in which case):
+- for the websocket component, this needs to be passed in. It is the domain you are running this app on, then a colon, then the port you set up the websocket to listen on, also in docker-compose.yml.
 - note that with domain, DON'T include "http://"
 - for example: 
-      - DOMAIN_AND_PORT=ec2-18-237-81-98.us-west-2.compute.amazonaws.com:40510
+      - DOMAIN_AND_PORT=my-testing-back-end.com:40510
 
 
 **Step 2: build and deploy the container**
 - leaving this up to the reader. Probably a combination of docker build, docker push, creating a cluster, using kubectl to create the pod, etc.
 
-**Step 3: monitor inbound calls**
+**Step 3: monitor inbound calls (this is the optional part from step 1)**
 - open this in the browser: http://[your-app-domain]:3000/
 - open the console
 - you should see a connected message, and a timestamp message
 
 
 **Step 4: make inbound calls**
+- (this is just to prove that the app is running, before connecting it to an Apigee proxy)
 - open this in the browser: http://[your-app-domain]:3000/apigee-ingress-point
 - this is the URL you need to hook up as the back-end endpoint from Apigee
 - when it is called, 2 things will happen:
 1) the console output from step 4 will show that an inbound call was processed
 2) the page output from this step will show the same message (i.e. that's what would be sent back to apigee and the front-end caller).
 
+
+**Step 5: test**
+- set up an Apigee pass-through proxy, pointing here:
+- [your-service-IP]/apigee-ingress-point
+- point the front-end code at that url (see step 4 part 2, here: https://github.com/danstadler-newrelic/apigee-dt-frontend/blob/master/README.md )
 
 
 
