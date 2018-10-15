@@ -23,7 +23,8 @@ wss.broadcast = function broadcast(data) {
 // Static test var
 var test_message = {
     'value1': 'ABC',
-    'value2': 'DEF'
+    'value2': 'DEF',
+    'timestamp': `${new Date()}`
 };
 
 var app = express()
