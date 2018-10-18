@@ -2,12 +2,9 @@ This Node app represents a downstream/back-end app sitting behind an Apigee prox
 
 It is based on original code found on the web, then modified for this integration project. BSD license only added in this project, not the original.
 
-This app has just gotten Dockerized. Please let me know if anything seems out of order.
-
 
 **test environment**
 - Ubuntu 16
-
 
 **prerequisites**
 
@@ -19,53 +16,65 @@ This app has just gotten Dockerized. Please let me know if anything seems out of
 2) If you want to run this just using Docker:
 - Docker
 
+3) pushing to gcloud: see this for an example: https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
 
 **Clone the source code**
 - https://github.com/danstadler-newrelic/apigee-dt-backend
 
 
-**Step 1: modify your Dockerfile**
-The first 2 of these need to be updated with your own values (third is optional):
+**Step 1: set up your environment variables**
+These can be used both for testing with npm start, as well as for building the container and deploying to K8S.
+```
+export PROJECT_ID="$(gcloud config get-value project -q)"
+export PROJECT_NAME=apigee-dt-back
+export PROJECT_PORT=3000
+export PROJECT_VERSION=v1
+export NEW_RELIC_APP_NAME=your-APM-app-name-here
+export NEW_RELIC_LICENSE_KEY=your-license-key-here
+```
 
 - NEW_RELIC_APP_NAME: the name you want this app to appear as in New Relic APM
-
 - NEW_RELIC_LICENSE_KEY: your RPM license key, available here: https://rpm.newrelic.com/accounts/[my-rpm-id]/applications/setup
 
-- DOMAIN_AND_PORT
-(this is really just optional... could just be localhost:40510, unless you are really needing to debug, in which case):
-- for the websocket component, this needs to be passed in. It is the domain you are running this app on, then a colon, then the port you set up the websocket to listen on, also in docker-compose.yml.
-- note that with domain, DON'T include "http://"
-- for example: 
-      - DOMAIN_AND_PORT=my-testing-back-end.com:40510
 
 **Step 1a: test locally**
-- you just need to export the newrelic environment variables for appName and licenseKey, then run npm start
-- export NEW_RELIC_APP_NAME=your-app-name-here
-- export NEW_RELIC_LICENSE_KEY=your-license-key-here
 - npm start
 
 
-**Step 2: build and deploy the container**
-- leaving this up to the reader. Probably a combination of docker build, docker push, creating a cluster, using kubectl to create the pod, etc.
+**Step 2: build and test the container**
+Based on the gcloud public doc above, you could do the following to build the container:
 
-**Step 3: monitor inbound calls (this is the optional part from step 1)**
-- open this in the browser: http://[your-app-domain]:3000/
-- open the console
-- you should see a connected message, and a timestamp message
+docker build \
+--build-arg newrelic_appname=${NEW_RELIC_APP_NAME} \
+--build-arg newrelic_license=${NEW_RELIC_LICENSE_KEY} \
+-t gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION} .
+
+You could also test the container locally, as described in that doc:
+
+docker run --rm -p ${PROJECT_PORT}:${PROJECT_PORT} gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION}
+
+
+**Step 3: deploy the container to K8S**
+Again basing this on the above doc. You could do the following:
+
+kubectl run ${PROJECT_NAME} --image=gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION} --port ${PROJECT_PORT}
+kubectl get pods
+kubectl expose deployment ${PROJECT_NAME} --type=LoadBalancer --port 80 --target-port ${PROJECT_PORT}
+kubectl get service
+
+The last command will take some time but will eventually tell you your load balancer's IP address. We'll refer to that as LOAD_BAL.
 
 
 **Step 4: make inbound calls**
 - (this is just to prove that the app is running, before connecting it to an Apigee proxy)
-- open this in the browser: http://[your-app-domain]:3000/apigee-ingress-point
+- open this in the browser: http://[LOAD_BAL]/apigee-ingress-point
 - this is the URL you need to hook up as the back-end endpoint from Apigee
-- when it is called, 2 things will happen:
-1) the console output from step 4 will show that an inbound call was processed
-2) the page output from this step will show the same message (i.e. that's what would be sent back to apigee and the front-end caller).
+- when it is called, the output will show the test message - 2 dummy name/value pairs, and a third with a timestamp.
 
 
 **Step 5: test**
 - set up an Apigee pass-through proxy, pointing here:
-- [your-service-IP]/apigee-ingress-point
+- [LOAD_BAL]/apigee-ingress-point
 - point the front-end code at that url (see step 4 part 2, here: https://github.com/danstadler-newrelic/apigee-dt-frontend/blob/master/README.md )
 
 
