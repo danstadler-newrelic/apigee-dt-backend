@@ -44,23 +44,28 @@ export NEW_RELIC_LICENSE_KEY=your-license-key-here
 **Step 2: build and test the container**
 Based on the gcloud public doc above, you could do the following to build the container:
 
+```
 docker build \
 --build-arg newrelic_appname=${NEW_RELIC_APP_NAME} \
 --build-arg newrelic_license=${NEW_RELIC_LICENSE_KEY} \
 -t gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION} .
+```
 
 You could also test the container locally, as described in that doc:
 
+```
 docker run --rm -p ${PROJECT_PORT}:${PROJECT_PORT} gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION}
-
+```
 
 **Step 3: deploy the container to K8S**
 Again basing this on the above doc. You could do the following:
 
+```
 kubectl run ${PROJECT_NAME} --image=gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION} --port ${PROJECT_PORT}
 kubectl get pods
 kubectl expose deployment ${PROJECT_NAME} --type=LoadBalancer --port 80 --target-port ${PROJECT_PORT}
 kubectl get service
+```
 
 The last command will take some time but will eventually tell you your load balancer's IP address. We'll refer to that as LOAD_BAL.
 
