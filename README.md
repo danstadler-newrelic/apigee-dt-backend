@@ -84,7 +84,7 @@ kubectl set image deployment/${PROJECT_NAME} ${PROJECT_NAME}=gcr.io/${PROJECT_ID
 **Step 5: test**
 - set up an Apigee pass-through proxy, pointing here:
 - [LOAD_BAL]/apigee-ingress-point
-- point the front-end code at that url (see step 4 part 2, here: https://github.com/danstadler-newrelic/apigee-dt-frontend/blob/master/README.md )
+- point the front-end code at that url (see: https://github.com/danstadler-newrelic/apigee-dt-frontend )
 
 
 
