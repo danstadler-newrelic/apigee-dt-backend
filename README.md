@@ -68,8 +68,12 @@ kubectl get pods
 kubectl expose deployment ${PROJECT_NAME} --type=LoadBalancer --port 80 --target-port ${PROJECT_PORT}
 kubectl get service
 ```
-
 The last command will take some time but will eventually tell you your load balancer's IP address. We'll refer to that as LOAD_BAL.
+
+note: if you rebuild/re-push the container, the kubectl command is slightly different. Use the docker push command on the new container image, and then use this:
+```
+kubectl set image deployment/${PROJECT_NAME} ${PROJECT_NAME}=gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION}
+```
 
 
 **Step 4: make inbound calls**
