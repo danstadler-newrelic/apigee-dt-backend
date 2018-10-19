@@ -8,12 +8,10 @@ It is based on original code found on the web, then modified for this integratio
 
 **prerequisites**
 
-1) if you want to build this and run it using npm start (when doing this, you'll have to edit your newrelic.yml file yourself, or work on your environment variables, see step 1a)
+1) Build/test/containerize:
 - Node
 - npm
 - build tools (i.e. go here https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04 and start from "How To Install Using a PPA", and make sure you go all the way through: sudo apt-get install build-essential)
-
-2) If you want to run this just using Docker:
 - Docker
 
 3) pushing to gcloud: see this for an example: https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
