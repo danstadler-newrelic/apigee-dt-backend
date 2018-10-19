@@ -61,6 +61,8 @@ docker run --rm -p ${PROJECT_PORT}:${PROJECT_PORT} gcr.io/${PROJECT_ID}/${PROJEC
 Again basing this on the above doc. You could do the following:
 
 ```
+docker push gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION}
+
 kubectl run ${PROJECT_NAME} --image=gcr.io/${PROJECT_ID}/${PROJECT_NAME}:${PROJECT_VERSION} --port ${PROJECT_PORT}
 kubectl get pods
 kubectl expose deployment ${PROJECT_NAME} --type=LoadBalancer --port 80 --target-port ${PROJECT_PORT}
